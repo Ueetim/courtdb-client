@@ -1,0 +1,16 @@
+.main {
+    width: calc(100% - 256px);
+    position: absolute;
+    left: 256px;
+}
+
+@media (max-width: 768px) {
+    .main {
+        width: 100%;
+        position: static;
+    }
+}
+
+option.service-small {
+    font-size: 14px;
+}

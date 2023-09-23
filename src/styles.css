@@ -1,3 +1,45 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  /* scroll-behavior: smooth; */
+}
+
+:root {
+  --gradient: linear-gradient(to right, #7b4490, #c32e3c);
+}
+
+.gradient {
+  background-image: var(--gradient);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  width: 3px !important;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #9333ea;
+  border-radius: 5px;
+  width: 3px !important;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #7622c4;
+}
+
+ion-icon {
+  pointer-events: none;
+}

@@ -1,0 +1,9 @@
+.height {
+    height: calc(100vh - 80px);
+    max-height: 600px;
+    scrollbar-width: thin !important;
+}
+
+option.service-small {
+    font-size: 15px;
+}
