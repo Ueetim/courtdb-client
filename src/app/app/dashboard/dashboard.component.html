@@ -25,11 +25,19 @@
                     </div>
 
                     <div class="relative rounded border bg-gray-100 text-gray-800 styled-select">
-                        <select class="decorated appearance-none py-1 pl-2 pr-9 bg-white cursor-pointer">
+                        <!-- <select class="decorated appearance-none py-1 pl-2 pr-9 bg-white cursor-pointer"
+                        (change)="sortCases($event)">
                             <option class="service-small" value="all">All Cases</option>
-                            <option class="service-small" value="open">Open Cases</option>
-                            <option class="service-small" value="closed">Closed Cases</option>
-                        </select>
+                            <option class="service-small" value="Open">Open Cases</option>
+                            <option class="service-small" value="Closed">Closed Cases</option>
+                        </select> -->
+                        <ng-select [searchable]="false" 
+                            [clearable]="false" 
+                            placeholder="All" 
+                            class="custom w-24"
+                            (change)="sortCases($event)">
+                            <ng-option *ngFor="let option of options" [value]="option.id">{{option.name}}</ng-option>
+                        </ng-select>
                         <div class="pointer-events-none absolute right-0 top-0 bottom-0 flex items-center px-2 text-gray-700">
                             <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />

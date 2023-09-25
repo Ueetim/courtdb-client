@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { CookieServices } from 'src/app/services/cookie.service';
 import { RecordsService } from 'src/app/services/records/records.service';
 import { Record } from 'src/app/models/records.model';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +12,15 @@ import { Record } from 'src/app/models/records.model';
 })
 export class DashboardComponent {
   skeletonPreloader = [1, 2, 3, 4];
+  allRecords?: Record[];
   records?: Record[];
   emptyRecord: boolean = false;
+
+  options = [
+    { id: 'all', name: 'All' },
+    { id: 'Open', name: 'Open' },
+    { id: 'Closed', name: 'Closed' },
+  ];
 
   constructor(
     private cookieService: CookieServices,
@@ -36,7 +44,8 @@ export class DashboardComponent {
     // get user records
     this.recordsService.getUserRecords().subscribe({
 			next: (v) => {
-        this.records = v.reverse();
+        this.allRecords = v.reverse();
+        this.records = this.allRecords;
 			},
 			error: (e) => {
         if (e.error.message == "nothing found") {
@@ -47,4 +56,20 @@ export class DashboardComponent {
 			},
 		});
   }  
+  
+  sortCases(status: any) {
+    this.records = [];
+
+    if (this.allRecords) {
+      this.allRecords.forEach((record)=>{
+        if (status == "all") {
+          this.records = this.allRecords;
+        } else {
+          if (record.status == status) {
+            this.records!.push(record);
+          }
+        }
+      })
+    }
+  }
 }
