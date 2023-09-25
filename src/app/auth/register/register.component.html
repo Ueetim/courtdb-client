@@ -3,61 +3,108 @@
         <div class="flex items-center w-full md:w-1/2">
             <div class="w-full height flex flex-col overflow-y-auto p-3">
                 <a routerLink="/" class="text-3xl text-gray-700 font-semibold w-max">eCourtPro.</a>
+
                 <p class="text-lg mt-2 text-gray-700">Create an account</p>
                 <form class="mt-2" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
                     <div class="mt-4">
-                        <input type="text" name="" id="" placeholder="Court name"
+                        <input type="text" placeholder="Court name"
                             class="w-full px-4 py-3 rounded-lg bg-gray-100 mt-2 border focus:border-purple-500 focus:bg-white focus:outline-none"
-                            autofocus autocomplete required>
+                            formControlName="name"
+                            [ngClass]="{ 'is-valid': (submitted || f.name.dirty) && !f.name.errors, 'is-invalid': (submitted || f.name.dirty) && f.name.errors }">
+                        <div class="invalid-feedback" *ngIf="(submitted || f.name.dirty) && f.name.errors">
+                            <div class="text-sm text-red-500" *ngIf="f.name.errors?.['required']">Field is required
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-4">
-                        <input type="text" name="" id="" placeholder="Location"
+                        <input type="text" placeholder="Location"
                             class="w-full px-4 py-3 rounded-lg bg-gray-100 mt-2 border focus:border-purple-500 focus:bg-white focus:outline-none"
-                            autofocus autocomplete required>
+                            formControlName="location"
+                            [ngClass]="{ 'is-valid': (submitted || f.location.dirty) && !f.location.errors, 'is-invalid': (submitted || f.location.dirty) && f.location.errors }">
+                        <div class="invalid-feedback" *ngIf="(submitted || f.location.dirty) && f.location.errors">
+                            <div class="text-sm text-red-500" *ngIf="f.location.errors?.['required']">Field is required
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="relative mt-4">
-                        <select class="w-full text-gray-600 px-4 py-3 rounded-lg bg-gray-100 mt-2 border focus:border-purple-500 focus:bg-white focus:outline-none appearance-none">
-                            <option selected disabled>Type</option>
-                            <option class="service-small" value="all">Magistrate court</option>
-                            <option class="service-small" value="open">Family court</option>
-                            <option class="service-small" value="closed">Customary court</option>
-                            <option class="service-small" value="closed">Juvenile court</option>
-                        </select>
-                        <div class="pointer-events-none absolute right-0 top-0 bottom-0 flex items-center px-2 text-gray-700">
-                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                            </svg>
+                    <div class="mt-6">
+                        <ng-select [(ngModel)]="selectedOption" [searchable]="false" [clearable]="false"
+                            formControlName="type" placeholder="Court type" class="custom"
+                            [ngClass]="{ 'is-valid': (submitted || f.type.dirty) && !f.type.errors, 'is-invalid rounded-lg': (submitted || f.type.dirty) && f.type.errors }">
+                            <ng-option *ngFor="let option of options" [value]="option.id">{{option.name}}</ng-option>
+                        </ng-select>
+                        <div class="invalid-feedback" *ngIf="(submitted || f.type.dirty) && f.type.errors">
+                            <div class="text-sm text-red-500" *ngIf="f.type.errors?.['required']">Select an option
+                            </div>
                         </div>
                     </div>
 
                     <div class="mt-4">
-                        <input type="email" name="" id="" placeholder="Email address"
+                        <input type="email" placeholder="Email address"
                             class="w-full px-4 py-3 rounded-lg bg-gray-100 mt-2 border focus:border-purple-500 focus:bg-white focus:outline-none"
-                            autofocus autocomplete required>
+                            formControlName="email"
+                            [ngClass]="{ 'is-valid': (f.email.dirty || submitted) && !f.email.errors, 'is-invalid': (f.email.dirty || submitted) && f.email.errors }">
+                        <div class="invalid-feedback" *ngIf="(submitted || f.email.dirty) && f.email.errors">
+                            <span class="text-sm text-red-500" *ngIf="f.email.errors?.['required']">Field is
+                                required</span>
+                            <span class="text-sm text-red-500" *ngIf="f.email.errors?.['email']">Email address is not
+                                valid</span>
+                        </div>
                     </div>
-    
+
                     <div class="mt-4">
-                        <input type="password" name="" id="" placeholder="Password" class="w-full px-4 py-3 rounded-lg bg-gray-100 mt-2 border focus:border-purple-500
-                      focus:bg-white focus:outline-none" required>
+                        <input type="password" placeholder="Password"
+                            class="w-full px-4 py-3 rounded-lg bg-gray-100 mt-2 border focus:border-purple-500 first-letter:focus:bg-white focus:outline-none"
+                            [ngClass]="{ 'is-valid': (submitted || f.password.dirty) && !f.password.errors, 'is-invalid': (submitted || f.password.dirty) && f.password.errors }"
+                            formControlName="password">
+                        <div class="invalid-feedback" *ngIf="(submitted || f.password.dirty) && f.password.errors">
+                            <div class="text-sm text-red-500" *ngIf="f.password.errors?.['required']">Field is required
+                            </div>
+                        </div>
                     </div>
-    
+
                     <div class="mt-4">
-                        <input type="password" name="" id="" placeholder="Confirm password" class="w-full px-4 py-3 rounded-lg bg-gray-100 mt-2 border focus:border-purple-500
-                      focus:bg-white focus:outline-none" required>
+                        <input type="password" placeholder="Confirm password"
+                            class="w-full px-4 py-3 rounded-lg bg-gray-100 mt-2 border focus:border-purple-500 focus:bg-white focus:outline-none"
+                            [ngClass]="{ 'is-valid': (submitted || f.confirmPassword.dirty) && !f.confirmPassword.errors, 'is-invalid': (submitted || f.confirmPassword.dirty) && f.confirmPassword.errors }"
+                            formControlName="confirmPassword">
+                        <div class="invalid-feedback"
+                            *ngIf="(submitted || f.confirmPassword.dirty) && f.confirmPassword.errors">
+                            <div class="text-sm text-red-500" *ngIf="f.confirmPassword.errors?.['required']">Confirm
+                                your password</div>
+                            <div class="text-sm text-red-500" *ngIf="f.confirmPassword.errors?.['mismatch']">Passwords
+                                do not match</div>
+                        </div>
                     </div>
-    
-                    <button type="submit" class="bg-purple-600 w-full block text-white font-semibold rounded-lg
-                    px-4 py-3 mt-6">Create account</button>
+
+                    <button type="submit"
+                        class="rounded-lg flex bg-purple-600 items-center justify-center outline-0 text-white cursor-pointer h-12 w-full mt-6"
+                        [disabled]="isWorking">
+                        <span *ngIf="!isWorking">Register</span>
+
+                        <div *ngIf="isWorking" role="status">
+                            <svg aria-hidden="true"
+                                class="w-8 h-8 mr-2 animate-spin text-purple-300 fill-white"
+                                viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                    fill="currentColor" />
+                                <path
+                                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                    fill="currentFill" />
+                            </svg>
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
                 </form>
-    
-                <p class="mt-4 text-gray-600">Already have an account? <a class="text-purple-600" routerLink="/auth/login">Log in</a></p>
+
+                <p class="mt-4 text-gray-600">Already have an account? <a class="text-purple-600"
+                        routerLink="/auth/login">Log in</a></p>
             </div>
         </div>
 
         <div class="w-1/2 md:flex hidden h-screen flex-col justify-center">
-            <img src="/assets/images/signup.svg"
-                class="" alt="signup image">
+            <img src="/assets/images/signup.svg" class="" alt="signup image">
         </div>
 
     </div>
