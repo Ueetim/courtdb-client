@@ -18,10 +18,11 @@ export class LoginModel {
 }
 
 export class User {
-    id!: string;
-    created_at!: string;
-    email!: string;
-    first_name!: string;
-    last_name!: string;
-    is_verified!: true
+    constructor(
+        public ID: string,
+        public name: string, 
+        public location: string, 
+        public type: string, 
+        public email: string, 
+    ) {}
 }

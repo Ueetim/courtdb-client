@@ -6,21 +6,19 @@ import { AuthService } from '../services/auth/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class AppGuard implements CanActivate, CanActivateChild {
   constructor(
     private authService: AuthService,
     private router: Router
   ) {
     
   }
-
-  canActivateChild(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isLoggedIn()) {
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    // throw new Error('Method not implemented.');
+    if (this.authService.isLoggedOut()) {
       return true;
     } else {
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/app']);
       return false;
     }
   }
@@ -28,11 +26,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isLoggedIn()) {
+    if (this.authService.isLoggedOut()) {
       return true;
     } else {
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/app']);
       return false;
     }
   }
+  
 }
