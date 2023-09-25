@@ -12,8 +12,8 @@ import { CookieServices } from 'src/app/services/cookie.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  submitted = false;
-  isWorking = false;
+  submitted:boolean = false;
+  isWorking:boolean = false;
 
   constructor(
     private authService: AuthService,

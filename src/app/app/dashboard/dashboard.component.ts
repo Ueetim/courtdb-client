@@ -36,7 +36,7 @@ export class DashboardComponent {
     // get user records
     this.recordsService.getUserRecords().subscribe({
 			next: (v) => {
-        this.records = v;
+        this.records = v.reverse();
 			},
 			error: (e) => {
         if (e.error.message == "nothing found") {

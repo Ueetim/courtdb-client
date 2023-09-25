@@ -22,7 +22,7 @@ export class SidebarComponent {
 			next: (v) => {
         this.cookieService.deleteCookie('jwt', '/');
         this.router.navigate(["/auth/login"]);
-        this.toast.success("User logged out");
+        this.toast.info("User logged out");
 			},
 			error: (e) => {
         this.toast.error("Oops! Something went wrong")

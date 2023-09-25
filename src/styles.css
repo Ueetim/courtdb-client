@@ -47,3 +47,16 @@ ion-icon {
 .is-invalid {
   border: 1px solid #fa4040;
 }
+
+.main {
+    width: calc(100% - 256px);
+    position: absolute;
+    left: 256px;
+}
+
+@media (max-width: 768px) {
+    .main {
+        width: 100%;
+        position: static;
+    }
+}

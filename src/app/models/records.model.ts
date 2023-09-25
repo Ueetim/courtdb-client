@@ -8,3 +8,14 @@ export interface Record {
     created: string;
     completed: string;
 }
+
+export class createRecord {
+	// handle user signup data
+	constructor(
+        public record_id: string,
+        public title: string,
+        public description:string,
+        public created: string,
+        public completed: string
+    ) {}
+}
