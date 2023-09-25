@@ -14,3 +14,7 @@
 option.service-small {
     font-size: 14px;
 }
+
+.height {
+    height: calc(100vh - 220px);
+}

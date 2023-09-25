@@ -1,7 +1,7 @@
 <div class="flex h-screen bg-gray-50">
     <app-sidebar></app-sidebar>
 
-    <div class="main flex flex-col flex-1 w-full">
+    <div class="main flex flex-col flex-1 w-full h-screen overflow-y-scroll">
         <app-header></app-header>
         <main class="h-full overflow-y-auto">
             <div class="container px-6 mx-auto grid">
@@ -11,7 +11,7 @@
                     </h2>
                     <button class="bg-purple-600 rounded text-sm text-white py-2 px-4 flex items-center space-x-1">
                         <ion-icon name="add-circle-outline" class="font-normal"></ion-icon>
-                        <span class="font-normal">New Case</span>
+                        <span class="font-normal">New record</span>
                     </button>
                 </div>
 
@@ -40,7 +40,11 @@
                 <!-- New Table -->
                 <div class="w-full mt-4 overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
-                        <table class="w-full whitespace-no-wrap">
+                        <div *ngIf="emptyRecord" class="flex w-full items-center justify-center flex-col gap-2 text-center text-gray-500 height">
+                            <ion-icon class="text-8xl" name="receipt-outline"></ion-icon>
+                            <p>You don't have any saved records</p>
+                        </div>
+                        <table *ngIf="!emptyRecord" class="w-full whitespace-no-wrap">
                             <thead>
                                 <tr
                                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b  bg-gray-50">
@@ -50,40 +54,49 @@
                                     <th class="px-4 font-semibold py-3">Created</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y">
-                                <tr class="text-gray-700">
+                            <tbody *ngIf="records" class="bg-white divide-y">
+                                <tr *ngFor="let record of records" class="text-gray-700">
                                     <td class="px-4 py-3">
-                                        GHA/LOS/5232
+                                        {{ record.record_id }}
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        Etim vs Asuquo
+                                        {{record.title}}
                                     </td>
                                     <td class="px-4 py-3 text-xs">
                                         <span
-                                            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full">
-                                            Closed
+                                            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full"
+                                            *ngIf="record.status == 'Closed'">
+                                            {{record.status}}
+                                        </span>
+                                        <span
+                                            class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full"
+                                            *ngIf="record.status == 'Open'">
+                                            {{record.status}}
                                         </span>
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        6/10/2020
+                                        {{record.created}}
                                     </td>
                                 </tr>
+                            </tbody>
 
-                                <tr class="text-gray-700">
+                            <tbody *ngIf="!records" class="bg-white divide-y">
+                                <tr *ngFor="let item of skeletonPreloader" 
+                                    class="text-gray-700">
                                     <td class="px-4 py-3">
-                                        GHA/LOS/5232
+                                        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        Etim vs Asuquo
+                                        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
                                     </td>
                                     <td class="px-4 py-3 text-xs">
                                         <span
-                                            class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full">
-                                            Open
+                                            class="px-2 py-1 font-semibold leading-tight rounded-full">
+                                            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
                                         </span>
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        6/10/2020
+                                        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
                                     </td>
                                 </tr>
                             </tbody>

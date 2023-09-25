@@ -27,9 +27,10 @@
                 </li>
             </ul>
         </div>
-        <ul class="absolute bottom-0">
-            <li class="relative px-6 py-3">
-                <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800">
+        <ul class="absolute bottom-0 w-full">
+            <li class="relative cursor-pointer text-gray-800 hover:text-purple-600 w-full"
+                (click)="logout()">
+                <a class="inline-flex items-center w-full text-sm px-6 py-3 font-semibold text-gray-800 hover:text-purple-600 transition-colors duration-150 ">
                     <ion-icon name="log-out-outline" class="text-xl font-semibold"></ion-icon>
                     <span class="ml-4">Log out</span>
                 </a>

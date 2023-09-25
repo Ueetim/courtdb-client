@@ -16,12 +16,6 @@ export class AuthService {
     private cookieService: CookieServices
   ) { }
 
-  
-// const headers= new HttpHeaders()
-//   .set('content-type', 'application/json')
-//   .set('Access-Control-Allow-Origin', '*');
-
-
   public userRegistration(data:SignupModel) {
     return this.httpClient.post<any>(this.baseUrl + '/register', data)
       .pipe(map(Users => {
@@ -44,7 +38,10 @@ export class AuthService {
   }
 
   public logout() {
-    this.cookieService.deleteCookie('jwt', '/');
+    return this.httpClient.post<any>(this.baseUrl + '/logout', { withCredentials: true })
+      .pipe(map(res => {
+        return res;
+      }));
   }
 
   public isLoggedIn() {
