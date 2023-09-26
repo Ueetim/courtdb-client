@@ -7,15 +7,6 @@
 * {
   font-family: 'Outfit', sans-serif;
   font-weight: 300;
-  /* scroll-behavior: smooth; */
-}
-
-:root {
-  --gradient: linear-gradient(to right, #7b4490, #c32e3c);
-}
-
-.gradient {
-  background-image: var(--gradient);
 }
 
 /* width */
@@ -40,6 +31,10 @@
   background: #7622c4;
 }
 
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: #6200802f;
+}
+
 ion-icon {
   pointer-events: none;
 }
@@ -59,4 +54,21 @@ ion-icon {
         width: 100%;
         position: static;
     }
+}
+
+.ngx-pagination {
+  padding-left: 0px !important;
+  margin-top: 30px;
+}
+
+.ngx-pagination .current,
+.btn-info {
+  background: #9333ea !important;
+  border: transparent !important;
+  border-radius: 4px !important;
+}
+
+.ngx-pagination .current:hover {
+  background: #9233ead7 !important;
+  border: transparent !important;
 }

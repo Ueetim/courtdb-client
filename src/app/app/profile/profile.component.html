@@ -1,0 +1,39 @@
+<div class="flex h-screen bg-gray-50">
+    <app-sidebar></app-sidebar>
+    <div class="main flex flex-col flex-1 w-full h-screen overflow-y-scroll">
+        <app-header></app-header>
+        <main class="h-full overflow-y-auto">
+            <div class="container px-6 mx-auto grid">
+                <h2 class="mt-6 text-2xl font-semibold text-gray-700">
+                    {{user.name}}
+                </h2>
+                <p class="text-gray-500">{{user.location}}</p>
+
+                <div class="mt-7 flex gap-x-4 w-full max-w-6xl">
+                    <div class="p-6 border shadow-md bg-white rounded-md w-full">
+                        <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-blue-100 rounded-full">
+                            Total
+                        </span>
+                        <p class="mt-4 font-semibold text-gray-500">Total cases</p>
+                        <p class="text-4xl font-semibold">{{records!.length}}</p>
+                    </div>
+                    <div class="p-6 border shadow-md bg-white rounded-md w-full">
+                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full">
+                            Closed
+                        </span>
+                        <p class="mt-4 font-semibold text-gray-500">Closed cases</p>
+                        <p class="text-4xl font-semibold">{{closedRecords!.length}}</p>
+                    </div>
+
+                    <div class="p-6 border shadow-md bg-white rounded-md w-full">
+                        <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full">
+                            Open
+                        </span>
+                        <p class="mt-4 font-semibold text-gray-500">Open cases</p>
+                        <p class="text-4xl font-semibold">{{openRecords!.length}}</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

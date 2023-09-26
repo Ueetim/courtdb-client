@@ -15,6 +15,7 @@ export class DashboardComponent {
   allRecords?: Record[];
   records?: Record[];
   emptyRecord: boolean = false;
+  p:number = 1;
 
   options = [
     { id: 'all', name: 'All' },
@@ -34,7 +35,6 @@ export class DashboardComponent {
 			next: (v) => {
         let user = JSON.stringify(v);
         localStorage.setItem("user", user);
-
 			},
 			error: (e) => {
 				console.log(e)
@@ -46,6 +46,9 @@ export class DashboardComponent {
 			next: (v) => {
         this.allRecords = v.reverse();
         this.records = this.allRecords;
+        
+        let userRecords = JSON.stringify(this.allRecords);
+        localStorage.setItem("records", userRecords);
 			},
 			error: (e) => {
         if (e.error.message == "nothing found") {

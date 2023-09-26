@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { IonicModule } from '@ionic/angular';
 import {CookieService} from 'ngx-cookie-service';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {CookieService} from 'ngx-cookie-service';
     HttpClientModule,
     HotToastModule.forRoot(),
     IonicModule.forRoot(),
+    NgxPaginationModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

@@ -10,6 +10,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NewRecordComponent } from './new-record/new-record.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ProfileComponent } from './profile/profile.component';
+
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -17,7 +20,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     DashboardComponent,
     HeaderComponent,
     SidebarComponent,
-    NewRecordComponent
+    NewRecordComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     IonicModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxPaginationModule
   ]
 })
 export class AppModule { }

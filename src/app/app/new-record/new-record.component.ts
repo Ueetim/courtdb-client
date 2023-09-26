@@ -13,6 +13,7 @@ import { RecordsService } from 'src/app/services/records/records.service';
 export class NewRecordComponent {
   submitted:boolean = false;
   isWorking:boolean = false;
+  date:Date = new Date();
 
   constructor(
     private recordsService: RecordsService,
