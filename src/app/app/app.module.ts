@@ -13,6 +13,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ProfileComponent } from './profile/profile.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DiscoverComponent } from './discover/discover.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HeaderComponent,
     SidebarComponent,
     NewRecordComponent,
-    ProfileComponent
+    ProfileComponent,
+    DiscoverComponent
   ],
   imports: [
     CommonModule,

@@ -10,12 +10,14 @@ import { CookieServices } from 'src/app/services/cookie.service';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+  lastUrlSegment = this.router.url.split('?')[0].split('/').pop();
+
   constructor(
     private authService: AuthService,
     private toast: HotToastService,
     private cookieService: CookieServices,
     private router: Router
-  ){}
+  ){console.log(this.lastUrlSegment)}
 
   logout() {
     this.authService.logout().subscribe({
