@@ -22,6 +22,18 @@ export class createRecord {
     ) {}
 }
 
+export class updateRecord {
+	// handle user signup data
+	constructor(
+        public ID: string,
+        public record_id: string,
+        public title: string,
+        public description:string,
+        public created: string,
+        public completed: string
+    ) {}
+}
+
 export class visibility {
 	// handle user signup data
 	constructor(

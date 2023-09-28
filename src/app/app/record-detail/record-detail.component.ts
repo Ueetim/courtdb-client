@@ -16,6 +16,7 @@ export class RecordDetailComponent {
   isWorking:boolean = false;
   documentation:boolean = false;
   editorContent!:string;
+  disabled:boolean = false;
   @Input() control!: FormControl
 
   constructor(
@@ -30,7 +31,11 @@ export class RecordDetailComponent {
     let user = JSON.parse(localStorage.getItem("user")!);
     this.userId = user.ID;
     
+    this.getRecord();
+    
+  }
 
+  getRecord() {
     let lastUrlSegment = this.router.url.split('?')[0].split('/').pop();
 
     let path= this.router.url.split('/');
@@ -39,6 +44,7 @@ export class RecordDetailComponent {
     let records;
     
     if (param == "public") {
+      this.disabled = true;
       records = JSON.parse(localStorage.getItem("publicRecords")!);
     } else {
       records = JSON.parse(localStorage.getItem("records")!);
@@ -49,18 +55,6 @@ export class RecordDetailComponent {
         this.record = record;
       }
     })
-
-    // if (!records) {
-    //   let records = JSON.parse(localStorage.getItem("publicRecords")!);
-
-    //   records.forEach((record:Record) => {
-    //     if (record.ID!.toString() == lastUrlSegment) {
-    //       this.record = record;
-    //     }
-    //   })
-
-    //   console.log(this.record);
-    // }
 
     this.editorContent = this.record.documentation;
   }
@@ -113,6 +107,7 @@ export class RecordDetailComponent {
         this.record = v;
         this.isWorking = false;
         this.toast.success("Documentation updated");
+        // this.getRecord();
 			},
 			error: (e) => {
 				let message = e.error.message;

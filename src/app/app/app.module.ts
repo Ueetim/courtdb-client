@@ -15,6 +15,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { DiscoverComponent } from './discover/discover.component';
 import { RecordDetailComponent } from './record-detail/record-detail.component';
 import { QuillModule } from 'ngx-quill';
+import { UpdateRecordComponent } from './update-record/update-record.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { QuillModule } from 'ngx-quill';
     NewRecordComponent,
     ProfileComponent,
     DiscoverComponent,
-    RecordDetailComponent
+    RecordDetailComponent,
+    UpdateRecordComponent
   ],
   imports: [
     CommonModule,

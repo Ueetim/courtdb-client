@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { createRecord, documentation, visibility } from 'src/app/models/records.model';
+import { createRecord, documentation, updateRecord, visibility } from 'src/app/models/records.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,13 @@ export class RecordsService {
 
   public createRecord(data:createRecord) {
     return this.httpClient.post<any>(this.baseUrl + '/record', data, { withCredentials: true })
+      .pipe(map(res => {
+        return res;
+      }));
+  }
+
+  public updateRecord(data:updateRecord) {
+    return this.httpClient.put<any>(this.baseUrl + '/record', data, { withCredentials: true })
       .pipe(map(res => {
         return res;
       }));

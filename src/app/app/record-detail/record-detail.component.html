@@ -36,55 +36,62 @@
                     <p>{{record.description}}</p>
                 </div>
                 <div class="mt-3 flex flex-wrap gap-1">
-                    <button (click)="showDocumentation()"
-                        class="bg-purple-600 rounded text-sm text-white py-2 px-4 flex items-center space-x-1">
-                        <ion-icon name="document-text-outline" class="font-normal"></ion-icon>
-                        <span class="font-normal">Documentation</span>
-                    </button>
-
-                    <div *ngIf="userId == record.court_id">
-                        <button *ngIf="record.visibility == 'public'" (click)="changeVisibility('private')"
-                            class="bg-blue-600 rounded w-36 text-sm text-white py-2 flex items-center justify-center space-x-1">
-                            <span *ngIf="!isWorking" class="flex space-x-1 items-center">
-                                <ion-icon name="lock-closed-outline" class="font-normal"></ion-icon>
-                                <span class="font-normal">Make private</span>
-                            </span>
-                            <div *ngIf="isWorking"
-                                class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                                role="status">
-                                <span
-                                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-                            </div>
+                    <div class="flex gap-1 flex-wrap">
+                        <button (click)="showDocumentation()"
+                            class="bg-purple-600 rounded text-sm text-white py-2 px-4 flex items-center space-x-1">
+                            <ion-icon name="document-text-outline" class="font-normal"></ion-icon>
+                            <span class="font-normal">Documentation</span>
                         </button>
-                        <button *ngIf="record.visibility == 'private'" (click)="changeVisibility('public')"
-                            class="bg-blue-600 rounded w-36 text-sm text-white py-2 flex items-center justify-center space-x-1">
-                            <span *ngIf="!isWorking" class="flex space-x-1 items-center">
-                                <ion-icon name="lock-open-outline" class="font-normal"></ion-icon>
-                                <span class="font-normal">Make public</span>
-                            </span>
-                            <div *ngIf="isWorking"
-                                class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                                role="status">
-                                <span
-                                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-                            </div>
+
+                        <div *ngIf="userId == record.court_id">
+                            <button *ngIf="record.visibility == 'public'" (click)="changeVisibility('private')"
+                                class="bg-blue-600 rounded w-36 text-sm text-white py-2 flex items-center justify-center space-x-1">
+                                <span *ngIf="!isWorking" class="flex space-x-1 items-center">
+                                    <ion-icon name="lock-closed-outline" class="font-normal"></ion-icon>
+                                    <span class="font-normal">Make private</span>
+                                </span>
+                                <div *ngIf="isWorking"
+                                    class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                    role="status">
+                                    <span
+                                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                </div>
+                            </button>
+                            <button *ngIf="record.visibility == 'private'" (click)="changeVisibility('public')"
+                                class="bg-blue-600 rounded w-36 text-sm text-white py-2 flex items-center justify-center space-x-1">
+                                <span *ngIf="!isWorking" class="flex space-x-1 items-center">
+                                    <ion-icon name="lock-open-outline" class="font-normal"></ion-icon>
+                                    <span class="font-normal">Make public</span>
+                                </span>
+                                <div *ngIf="isWorking"
+                                    class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                    role="status">
+                                    <span
+                                        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <button routerLink="/app/record/update/{{record.ID}}"
+                            *ngIf="userId == record.court_id"
+                            class="bg-green-600 rounded text-sm text-white py-2 px-4 flex items-center space-x-1">
+                            <ion-icon name="create-outline" class="font-normal"></ion-icon>
+                            <span class="font-normal">Edit</span>
                         </button>
                     </div>
-
                 </div>
             </div>
             <div *ngIf="documentation"
                 class="fixed top-0 w-screen h-screen left-0 z-[100] bg-white bg-opacity-40 backdrop-blur-lg flex flex-col items-center justify-center">
                 <div class="editor-con">
-                    <quill-editor [formControl]="control" [(ngModel)]="editorContent">helllo</quill-editor>
+                    <quill-editor [formControl]="control" [(ngModel)]="editorContent"
+                        [readOnly]="disabled"></quill-editor>
                 </div>
                 <div class="mt-24 lg:mt-14 flex space-x-2 justify-between">
-                    <button class="bg-red-600 rounded text-sm text-white py-2 px-4"
-                        (click)="hideDocumentation()">
+                    <button class="bg-red-600 rounded text-sm text-white py-2 px-4" (click)="hideDocumentation()">
                         <span class="font-normal">Cancel</span>
                     </button>
-                    <button (click)="updateDocumentation()"
-                        *ngIf="userId == record.court_id"
+                    <button (click)="updateDocumentation()" *ngIf="userId == record.court_id"
                         class="bg-purple-600 rounded text-sm text-white py-2 px-4 flex items-center justify-center space-x-1">
                         <span *ngIf="!isWorking">
                             <span class="font-normal">Save</span>
