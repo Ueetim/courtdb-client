@@ -1,0 +1,103 @@
+<div class="flex h-screen bg-gray-50">
+    <app-sidebar></app-sidebar>
+
+    <div class="main flex flex-col flex-1 w-full h-screen overflow-y-scroll">
+        <app-header></app-header>
+        <main class="h-full">
+            <div class="container px-6 grid max-w-4xl">
+                <div class="text-gray-700 mb-3">
+                    <div class="flex justify-between items-center mt-6 mb-2 gap-x-2">
+                        <h2 class="text-2xl m-0 font-semibold">
+                            {{record.title}}
+                        </h2>
+                        <span *ngIf="record.status == 'Open'"
+                            class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full">
+                            Open
+                        </span>
+                        <span *ngIf="record.status == 'Closed'"
+                            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full">
+                            Closed
+                        </span>
+                    </div>
+                    <div class="mb-6 flex gap-2 flex-wrap text-sm">
+                        <div class="pr-2 border-r border-gray-500">
+                            <span class="font-normal">ID: </span>
+                            {{record.record_id}}
+                        </div>
+                        <div class="pr-2 border-r border-gray-500">
+                            <span class="font-normal">Date created: </span>
+                            {{record.created | date}}
+                        </div>
+                        <div class="pr-2" *ngIf="record.completed">
+                            <span class="font-normal">Date completed: </span>
+                            {{record.completed}}
+                        </div>
+                    </div>
+                    <p>{{record.description}}</p>
+                </div>
+                <div class="mt-3 flex flex-wrap gap-1">
+                    <button (click)="showDocumentation()"
+                        class="bg-purple-600 rounded text-sm text-white py-2 px-4 flex items-center space-x-1">
+                        <ion-icon name="document-text-outline" class="font-normal"></ion-icon>
+                        <span class="font-normal">Documentation</span>
+                    </button>
+
+                    <div *ngIf="userId == record.court_id">
+                        <button *ngIf="record.visibility == 'public'" (click)="changeVisibility('private')"
+                            class="bg-blue-600 rounded w-36 text-sm text-white py-2 flex items-center justify-center space-x-1">
+                            <span *ngIf="!isWorking" class="flex space-x-1 items-center">
+                                <ion-icon name="lock-closed-outline" class="font-normal"></ion-icon>
+                                <span class="font-normal">Make private</span>
+                            </span>
+                            <div *ngIf="isWorking"
+                                class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                role="status">
+                                <span
+                                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                            </div>
+                        </button>
+                        <button *ngIf="record.visibility == 'private'" (click)="changeVisibility('public')"
+                            class="bg-blue-600 rounded w-36 text-sm text-white py-2 flex items-center justify-center space-x-1">
+                            <span *ngIf="!isWorking" class="flex space-x-1 items-center">
+                                <ion-icon name="lock-open-outline" class="font-normal"></ion-icon>
+                                <span class="font-normal">Make public</span>
+                            </span>
+                            <div *ngIf="isWorking"
+                                class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                role="status">
+                                <span
+                                    class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                            </div>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <div *ngIf="documentation"
+                class="fixed top-0 w-screen h-screen left-0 z-[100] bg-white bg-opacity-40 backdrop-blur-lg flex flex-col items-center justify-center">
+                <div class="editor-con">
+                    <quill-editor [formControl]="control" [(ngModel)]="editorContent">helllo</quill-editor>
+                </div>
+                <div class="mt-24 lg:mt-14 flex space-x-2 justify-between">
+                    <button class="bg-red-600 rounded text-sm text-white py-2 px-4"
+                        (click)="hideDocumentation()">
+                        <span class="font-normal">Cancel</span>
+                    </button>
+                    <button (click)="updateDocumentation()"
+                        *ngIf="userId == record.court_id"
+                        class="bg-purple-600 rounded text-sm text-white py-2 px-4 flex items-center justify-center space-x-1">
+                        <span *ngIf="!isWorking">
+                            <span class="font-normal">Save</span>
+                        </span>
+                        <div *ngIf="isWorking"
+                            class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                            role="status">
+                            <span
+                                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

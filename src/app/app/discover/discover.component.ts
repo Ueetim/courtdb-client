@@ -34,6 +34,9 @@ export class DiscoverComponent {
 			next: (v) => {
         this.allRecords = v.reverse();
         this.records = this.allRecords;
+
+        let userRecords = JSON.stringify(this.allRecords);
+        localStorage.setItem("publicRecords", userRecords);
 			},
 			error: (e) => {
         if (e.error.message == "nothing found") {

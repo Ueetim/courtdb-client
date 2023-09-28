@@ -1,3 +1,8 @@
 .height {
     height: calc(100vh - 220px);
 }
+
+tbody tr:hover {
+    cursor: pointer;
+    background-color: #8000801a;
+}

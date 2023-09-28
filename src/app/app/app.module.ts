@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -14,6 +13,8 @@ import { ProfileComponent } from './profile/profile.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DiscoverComponent } from './discover/discover.component';
+import { RecordDetailComponent } from './record-detail/record-detail.component';
+import { QuillModule } from 'ngx-quill';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { DiscoverComponent } from './discover/discover.component';
     SidebarComponent,
     NewRecordComponent,
     ProfileComponent,
-    DiscoverComponent
+    DiscoverComponent,
+    RecordDetailComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,13 @@ import { DiscoverComponent } from './discover/discover.component';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    QuillModule.forRoot({
+      customOptions: [{
+        import: 'formats/font',
+        whitelist: ['mirza', 'roboto', 'aref', 'serif', 'sansserif', 'monospace']
+      }]
+    }),
   ]
 })
 export class AppModule { }

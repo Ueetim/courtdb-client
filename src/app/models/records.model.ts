@@ -7,6 +7,8 @@ export interface Record {
     description:string;
     created: string;
     completed: string;
+    visibility: string;
+    documentation: string;
 }
 
 export class createRecord {
@@ -17,5 +19,21 @@ export class createRecord {
         public description:string,
         public created: string,
         public completed: string
+    ) {}
+}
+
+export class visibility {
+	// handle user signup data
+	constructor(
+        public id: string,
+        public visibility: string
+    ) {}
+}
+
+export class documentation {
+	// handle user signup data
+	constructor(
+        public id: string,
+        public documentation: string
     ) {}
 }

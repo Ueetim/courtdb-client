@@ -58,7 +58,8 @@
                                 </tr>
                             </thead>
                             <tbody *ngIf="records" class="bg-white divide-y">
-                                <tr *ngFor="let record of records | paginate: { itemsPerPage: 10, currentPage: p }" class="text-gray-700">
+                                <tr routerLink="/app/record/{{record.ID}}"
+                                    *ngFor="let record of records | paginate: { itemsPerPage: 10, currentPage: p }" class="text-gray-700">
                                     <td class="px-4 py-3">
                                         {{ record.record_id }}
                                     </td>

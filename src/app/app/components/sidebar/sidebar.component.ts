@@ -17,7 +17,7 @@ export class SidebarComponent {
     private toast: HotToastService,
     private cookieService: CookieServices,
     private router: Router
-  ){console.log(this.lastUrlSegment)}
+  ){}
 
   logout() {
     this.authService.logout().subscribe({
