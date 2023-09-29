@@ -78,7 +78,7 @@
                             <span class="font-normal">Edit</span>
                         </button>
 
-                        <button (click)="deletePopup = true"
+                        <button (click)="deletePopup = true" *ngIf="userId == record.court_id"
                             class="bg-red-600 rounded text-sm text-white py-2 flex items-center justify-center w-20 space-x-1">
                             <span class="flex space-x-1 items-center">
                                 <ion-icon name="trash-outline" class="font-normal"></ion-icon>
