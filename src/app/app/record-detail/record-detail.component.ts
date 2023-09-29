@@ -13,53 +13,60 @@ import { FormControl } from '@angular/forms';
 export class RecordDetailComponent {
   record!: Record;
   userId!: number;
-  isWorking:boolean = false;
-  documentation:boolean = false;
-  editorContent!:string;
-  disabled:boolean = false;
+  isWorking: boolean = false;
+  deletePopup:boolean = false;
+  isDeleting: boolean = false;
+  documentation: boolean = false;
+  editorContent!: string;
+  disabled: boolean = false;
   @Input() control!: FormControl
 
   constructor(
     private router: Router,
     private recordsService: RecordsService,
     private toast: HotToastService
-  ){}
+  ) { }
 
   ngOnInit() {
     this.control = this.control ?? new FormControl()
-    
+
     let user = JSON.parse(localStorage.getItem("user")!);
     this.userId = user.ID;
-    
+
     this.getRecord();
-    
+
   }
 
   getRecord() {
-    let lastUrlSegment = this.router.url.split('?')[0].split('/').pop();
-
-    let path= this.router.url.split('/');
-    let param = path[path.length-2];
-
-    let records;
-    
-    if (param == "public") {
-      this.disabled = true;
-      records = JSON.parse(localStorage.getItem("publicRecords")!);
+    if (localStorage.getItem('record')) {
+      this.record = JSON.parse(localStorage.getItem("record")!);
+      localStorage.removeItem("record");
     } else {
-      records = JSON.parse(localStorage.getItem("records")!);
-    }
+      let lastUrlSegment = this.router.url.split('?')[0].split('/').pop();
 
-    records.forEach((record:Record) => {
-      if (record.ID!.toString() == lastUrlSegment) {
-        this.record = record;
+      let path = this.router.url.split('/');
+      let param = path[path.length - 2];
+
+      let records;
+
+      if (param == "public") {
+        this.disabled = true;
+        records = JSON.parse(localStorage.getItem("publicRecords")!);
+      } else {
+        records = JSON.parse(localStorage.getItem("records")!);
       }
-    })
+
+      records.forEach((record: Record) => {
+        if (record.ID!.toString() == lastUrlSegment) {
+          this.record = record;
+        }
+      })
+    }
 
     this.editorContent = this.record.documentation;
   }
 
-  changeVisibility(value:string) {
+  changeVisibility(value: string) {
     this.isWorking = true;
 
     const data = new visibility(
@@ -68,22 +75,22 @@ export class RecordDetailComponent {
     )
 
     this.recordsService.changeVisibility(data).subscribe({
-			next: (v) => {
+      next: (v) => {
         this.record = v;
         this.isWorking = false;
         this.toast.success("Visibility updated");
-			},
-			error: (e) => {
-				let message = e.error.message;
+      },
+      error: (e) => {
+        let message = e.error.message;
         this.isWorking = false;
-				
+
         if (message) {
           this.toast.error(message);
         } else {
           this.toast.error("An unknown error occurred. Please try again")
         }
-			},
-		});
+      },
+    });
   }
 
   showDocumentation() {
@@ -103,22 +110,42 @@ export class RecordDetailComponent {
     )
 
     this.recordsService.updateDocumentation(data).subscribe({
-			next: (v) => {
+      next: (v) => {
         this.record = v;
         this.isWorking = false;
         this.toast.success("Documentation updated");
         // this.getRecord();
-			},
-			error: (e) => {
-				let message = e.error.message;
+      },
+      error: (e) => {
+        let message = e.error.message;
         this.isWorking = false;
-				
+
         if (message) {
           this.toast.error(message);
         } else {
           this.toast.error("An unknown error occurred. Please try again")
         }
-			},
-		});
-  } 
+      },
+    });
+  }
+
+  deleteRecord() {
+    this.isDeleting = true;
+
+    const data = this.record.ID;
+
+    this.recordsService.deleteRecord(data).subscribe({
+      next: (v) => {
+        this.record = v;
+        this.isDeleting = false;
+        this.toast.success("Record deleted");
+        this.router.navigate(["/app"]);
+      },
+      error: (e) => {
+        this.isDeleting = false;
+
+        this.toast.error("Failed to delete record")
+      },
+    });
+  }
 }

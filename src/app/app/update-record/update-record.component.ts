@@ -56,12 +56,11 @@ export class UpdateRecordComponent implements OnInit {
       this.updateForm.value.dateClosed!
     )
 
-    console.log(data);
-
     this.recordsService.updateRecord(data).subscribe({
 			next: (v) => {
         this.toast.success("Record updated successfully");
-        this.router.navigate(['/app']);
+        localStorage.setItem("record", JSON.stringify(v));
+        this.router.navigate(['/app/record/'+ this.record.ID]);
 
 			},
 			error: (e) => {
