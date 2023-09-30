@@ -1,5 +1,5 @@
 <!-- Desktop sidebar -->
-<aside class="z-20 hidden fixed top-0 w-64 bg-white overflow-y-auto h-screen lg:block flex-shrink-0 shadow-md">
+<aside class="z-20 hidden fixed top-0 w-64 bg-white h-screen lg:block flex-shrink-0 shadow-md">
     <div class="py-4 text-gray-500">
         <div>
             <a class="ml-6 text-lg font-bold text-gray-800 " href="#">
@@ -45,13 +45,14 @@
     </div>
 </aside>
 <!-- Mobile sidebar -->
-<aside class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white lg:hidden shadow-md"
+<aside class="fixed top-0 h-screen inset-y-0 z-20 flex-shrink-0 bg-white lg:hidden shadow-md"
     x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
     x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
     x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0 transform -translate-x-20">
+    x-transition:leave-end="opacity-0 transform -translate-x-20"
+    [ngClass]="{'w-64':(showSidebar == true), 'w-0':(showSidebar == false)}">
     <div class="py-4 text-gray-500">
-        <div>
+        <div *ngIf="showSidebar">
             <a class="ml-6 text-lg font-bold text-gray-800 " href="#">
                 eCourtPro.
             </a>
@@ -83,7 +84,7 @@
                 </li>
             </ul>
         </div>
-        <ul class="absolute bottom-0 w-full">
+        <ul class="absolute bottom-0 w-full" *ngIf="showSidebar">
             <li class="relative cursor-pointer text-gray-800 hover:text-purple-700 w-full" (click)="logout()">
                 <a
                     class="inline-flex items-center w-full text-sm px-6 py-3 font-semibold text-gray-800 hover:text-purple-600 transition-colors duration-150 ">
@@ -92,5 +93,17 @@
                 </a>
             </li>
         </ul>
+    </div>
+
+    <!-- overlay -->
+    <div class="overlay z-30 h-screen w-[calc(100%-256px)] top-0 right-0 bg-black bg-opacity-25 fixed"
+        (click)="toggleSidebar()"
+        *ngIf="showSidebar"></div>
+
+    <!-- close and open section -->
+    <div class="z-40 rounded-r-md cursor-pointer absolute -right-4 inset-y-1/2 -translate-y-1/2 h-40 w-4 flex items-center justify-center bg-purple-200 shadow-md"
+        (click)="toggleSidebar()">
+        <ion-icon name="caret-forward-outline" *ngIf="!showSidebar"></ion-icon>
+        <ion-icon name="caret-back-outline" *ngIf="showSidebar"></ion-icon>
     </div>
 </aside>

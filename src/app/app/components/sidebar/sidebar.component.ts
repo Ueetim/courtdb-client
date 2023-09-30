@@ -11,6 +11,8 @@ import { CookieServices } from 'src/app/services/cookie.service';
 })
 export class SidebarComponent {
   lastUrlSegment = this.router.url.split('?')[0].split('/').pop();
+  showSidebar: boolean = false;
+  sidebarClick: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -18,6 +20,14 @@ export class SidebarComponent {
     private cookieService: CookieServices,
     private router: Router
   ){}
+
+  toggleSidebar() {
+    this.showSidebar = !this.showSidebar
+  }
+
+  preventCloseOnClick() {
+    this.sidebarClick = true;
+  }
 
   logout() {
     this.authService.logout().subscribe({
