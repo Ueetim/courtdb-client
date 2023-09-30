@@ -21,7 +21,8 @@
                         <ion-icon name="search" class="pl-2"></ion-icon>
                         <input type="search" 
                             placeholder="Browse cases..." 
-                            class="bg-transparent p-2 outline-none w-full md:w-60">
+                            class="bg-transparent p-2 outline-none w-full md:w-60" #search
+                            (input)="getRecordsBySearch(search.value)">
                     </div>
 
                     <div class="relative hidden md:block rounded border bg-gray-100 text-gray-800 styled-select w-max">

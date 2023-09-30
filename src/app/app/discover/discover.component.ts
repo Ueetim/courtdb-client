@@ -63,4 +63,12 @@ export class DiscoverComponent {
       })
     }
   }
+
+  getRecordsBySearch(searchTerm:string) {
+    this.records = [];
+
+    if (this.allRecords) {
+      this.records = this.allRecords.filter(record => record.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    }
+  }
 }
