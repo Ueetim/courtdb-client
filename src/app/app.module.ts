@@ -9,10 +9,12 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { IonicModule } from '@ionic/angular';
 import {CookieService} from 'ngx-cookie-service';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
