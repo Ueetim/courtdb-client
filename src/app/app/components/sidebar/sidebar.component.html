@@ -45,7 +45,7 @@
     </div>
 </aside>
 <!-- Mobile sidebar -->
-<aside class="fixed top-0 h-screen inset-y-0 z-20 flex-shrink-0 bg-white lg:hidden shadow-md"
+<aside class="fixed top-0 h-full inset-y-0 z-20 flex-shrink-0 bg-white lg:hidden shadow-md"
     x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
     x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
     x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
@@ -96,7 +96,7 @@
     </div>
 
     <!-- overlay -->
-    <div class="overlay z-30 h-screen w-[calc(100%-256px)] top-0 right-0 bg-black bg-opacity-25 fixed"
+    <div class="overlay z-30 h-full w-[calc(100%-256px)] top-0 right-0 bg-black bg-opacity-25 fixed"
         (click)="toggleSidebar()"
         *ngIf="showSidebar"></div>
 

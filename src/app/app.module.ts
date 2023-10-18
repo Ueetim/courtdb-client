@@ -1,6 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +25,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     IonicModule.forRoot(),
     NgxPaginationModule,
   ],
-  providers: [CookieService],
+  providers: [CookieService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
   schemas:   [ CUSTOM_ELEMENTS_SCHEMA ]
 })
