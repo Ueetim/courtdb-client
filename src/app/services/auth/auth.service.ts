@@ -4,12 +4,13 @@ import { LoginModel, SignupModel, User } from 'src/app/auth/auth.model';
 import { map } from 'rxjs/operators';
 import { CookieServices } from '../cookie.service';
 import { HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl: string = "http://localhost:4000/api";
+  baseUrl: string = environment.baseUrl;
 
   constructor(
     private httpClient: HttpClient,

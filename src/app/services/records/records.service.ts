@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { createRecord, documentation, updateRecord, visibility } from 'src/app/models/records.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordsService {
-  baseUrl: string = "http://localhost:4000/api";
+  baseUrl: string = environment.baseUrl;
 
   constructor(
     private httpClient: HttpClient,
