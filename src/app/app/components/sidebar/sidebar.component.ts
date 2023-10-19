@@ -32,6 +32,10 @@ export class SidebarComponent {
   logout() {
     this.authService.logout().subscribe({
 			next: (v) => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("records");
+        localStorage.removeItem("publicRecords");
+        localStorage.removeItem("auth");
         this.cookieService.deleteCookie('auth', '/');
         this.router.navigate(["/auth/login"]);
         this.toast.info("User logged out");

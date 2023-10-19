@@ -20,7 +20,6 @@ export class ProfileComponent {
 
     if (localStorage.getItem("records")) {
       this.records = JSON.parse(localStorage.getItem("records")!);
-      console.log(this.records)
 
       this.records.forEach((record)=>{
         if (record.status == "Open") {

@@ -10,11 +10,14 @@ import { CookieServices } from './services/cookie.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  static token:string = "";
+  static token:string;
 
   constructor(private cookieService: CookieServices) {
-    if (this.cookieService.checkCookie("auth")) {
-      AuthInterceptor.token = this.cookieService.getCookie("auth");
+    const itemSet = this.cookieService.checkCookie("auth");
+    if (itemSet) {
+      AuthInterceptor.token = this.cookieService.getCookie('auth')!;
+    } else {
+      AuthInterceptor.token = "";
     }
   }
 
