@@ -32,7 +32,7 @@ export class SidebarComponent {
   logout() {
     this.authService.logout().subscribe({
 			next: (v) => {
-        this.cookieService.deleteCookie('jwt', '/');
+        this.cookieService.deleteCookie('auth', '/');
         this.router.navigate(["/auth/login"]);
         this.toast.info("User logged out");
 			},

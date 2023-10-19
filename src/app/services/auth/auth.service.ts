@@ -46,10 +46,10 @@ export class AuthService {
   }
 
   public isLoggedIn() {
-    return this.cookieService.checkCookie('jwt');
+    return this.cookieService.checkCookie('auth');
   }
 
   public isLoggedOut() {
-    return !this.cookieService.checkCookie('jwt');
+    return !this.cookieService.checkCookie('auth');
   }
 }

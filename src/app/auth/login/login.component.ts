@@ -51,20 +51,21 @@ export class LoginComponent {
     this.authService.userLogin(loginData).subscribe({
 			next: (v) => {
         let token = v.token.value;
-        this.cookieService.storeCookie("jwt", token, "/");
+        this.cookieService.storeCookie("auth", token, "/");
         this.router.navigate(['/app']);
 
 			},
 			error: (e) => {
-				let message = e.error.message;
-        this.isWorking = false;
-        this.loginForm.enable();
+				// let message = e.error.message;
+        // this.isWorking = false;
+        // this.loginForm.enable();
 				
-        if (message) {
-          this.toast.error(message);
-        } else {
-          this.toast.error("An unknown error occurred. Please try again")
-        }
+        // if (message) {
+        //   this.toast.error(message);
+        // } else {
+        //   this.toast.error("An unknown error occurred. Please try again")
+        // }
+        console.log(e)
 			},
 		});
   }
