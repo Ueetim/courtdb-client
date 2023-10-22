@@ -86,7 +86,7 @@ quill-editor {
   height: 100%;
 }
 
-tbody tr:hover {
+tr.records:hover {
     cursor: pointer;
     background-color: #8000801a;
 }

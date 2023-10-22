@@ -44,7 +44,7 @@
                             <ion-icon class="text-8xl" name="receipt-outline"></ion-icon>
                             <p>Nothing here yet</p>
                         </div>
-                        <table *ngIf="!emptyRecord && records!.length > 0" class="w-full whitespace-no-wrap">
+                        <table *ngIf="!emptyRecord" class="w-full whitespace-no-wrap">
                             <thead>
                                 <tr
                                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b  bg-gray-50">
@@ -54,9 +54,9 @@
                                     <th class="px-4 font-semibold py-3">Created</th>
                                 </tr>
                             </thead>
-                            <tbody *ngIf="records" class="bg-white divide-y">
+                            <tbody *ngIf="records" class="records bg-white divide-y">
                                 <tr routerLink="/app/record/public/{{record.ID}}"
-                                    *ngFor="let record of records | paginate: { itemsPerPage: 10, currentPage: p }" class="text-gray-700">
+                                    *ngFor="let record of records | paginate: { itemsPerPage: 10, currentPage: p }" class="text-gray-700 records">
                                     <td class="px-4 py-3">
                                         {{ record.record_id }}
                                     </td>
@@ -80,26 +80,51 @@
                                     </td>
                                 </tr>
 
-                                <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+                                <tr class="hover:bg-transparent mb-5">
+                                    <td colspan="4">
+                                        <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+                                    </td>
+                                </tr>
                             </tbody>
 
                             <tbody *ngIf="!records" class="bg-white divide-y">
                                 <tr *ngFor="let item of skeletonPreloader" 
                                     class="text-gray-700">
-                                    <td class="px-4 py-3">
-                                        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                                    <td class="">
+                                        <div role="status" class="max-w-sm my-5 mx-4 animate-pulse">
+                                            <div class="h-3 bg-gray-200 rounded-full">
+                                            </div>
+                                            
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
                                     </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                                    <td class="">
+                                        <div role="status" class="max-w-sm my-5 mx-4 animate-pulse">
+                                            <div class="h-3 bg-gray-200 rounded-full">
+                                            </div>
+                                            
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
                                     </td>
-                                    <td class="px-4 py-3 text-xs">
-                                        <span
-                                            class="px-2 py-1 font-semibold leading-tight rounded-full">
-                                            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-                                        </span>
+                                    <td class="">
+                                        <div role="status" class="max-w-sm my-5 mx-4 animate-pulse">
+                                            <div class="h-3 bg-gray-200 rounded-full">
+                                            </div>
+                                            
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
                                     </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                                    <td class="">
+                                        <div role="status" class="max-w-sm my-5 mx-4 animate-pulse">
+                                            <div class="h-3 bg-gray-200 rounded-full">
+                                            </div>
+                                            
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
                                     </td>
                                 </tr>
                             </tbody>

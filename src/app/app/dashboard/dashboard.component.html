@@ -19,21 +19,18 @@
                 <div class="md:flex md:space-y-0 items-center justify-between">
                     <div class="flex items-center space-x-2 bg-gray-100 border rounded w-full md:w-max">
                         <ion-icon name="search" class="pl-2"></ion-icon>
-                        <input type="search" 
-                            placeholder="Browse cases by title" 
+                        <input type="search" placeholder="Browse cases by title"
                             class="bg-transparent p-2 outline-none w-full md:w-60" #search
                             (input)="getRecordsBySearch(search.value)">
                     </div>
 
                     <div class="relative hidden md:block rounded border bg-gray-100 text-gray-800 styled-select w-max">
-                        <ng-select [searchable]="false" 
-                            [clearable]="false" 
-                            placeholder="All" 
-                            class="custom w-24 cursor-pointer"
-                            (change)="sortCases($event)">
+                        <ng-select [searchable]="false" [clearable]="false" placeholder="All"
+                            class="custom w-24 cursor-pointer" (change)="sortCases($event)">
                             <ng-option *ngFor="let option of options" [value]="option.id">{{option.name}}</ng-option>
                         </ng-select>
-                        <div class="pointer-events-none absolute right-0 top-0 bottom-0 flex items-center px-2 text-gray-700">
+                        <div
+                            class="pointer-events-none absolute right-0 top-0 bottom-0 flex items-center px-2 text-gray-700">
                             <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                             </svg>
@@ -44,11 +41,12 @@
                 <!-- New Table -->
                 <div class="w-full mt-4 overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
-                        <div *ngIf="emptyRecord || records?.length == 0" class="flex w-full items-center justify-center flex-col gap-2 text-center text-gray-500 height">
+                        <div *ngIf="emptyRecord || records?.length == 0"
+                            class="flex w-full items-center justify-center flex-col gap-2 text-center text-gray-500 height">
                             <ion-icon class="text-8xl" name="receipt-outline"></ion-icon>
                             <p>Nothing here yet</p>
                         </div>
-                        <table *ngIf="!emptyRecord && records!.length > 0" class="w-full whitespace-no-wrap">
+                        <table *ngIf="!emptyRecord" class="w-full whitespace-no-wrap">
                             <thead>
                                 <tr
                                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b  bg-gray-50">
@@ -60,7 +58,8 @@
                             </thead>
                             <tbody *ngIf="records" class="bg-white divide-y">
                                 <tr routerLink="/app/record/{{record.ID}}"
-                                    *ngFor="let record of records | paginate: { itemsPerPage: 10, currentPage: p }" class="text-gray-700">
+                                    *ngFor="let record of records | paginate: { itemsPerPage: 10, currentPage: p }"
+                                    class="text-gray-700 records">
                                     <td class="px-4 py-3">
                                         {{ record.record_id }}
                                     </td>
@@ -69,12 +68,12 @@
                                     </td>
                                     <td class="px-4 py-3 text-xs">
                                         <span
-                                            class="w-14 block text-center px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full"
+                                            class="w-14 block text-center  font-semibold leading-tight text-green-700 bg-green-100 rounded-full"
                                             *ngIf="record.status == 'Closed'">
                                             {{record.status}}
                                         </span>
                                         <span
-                                            class="w-14 block text-center px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full"
+                                            class="w-14 block text-center  font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full"
                                             *ngIf="record.status == 'Open'">
                                             {{record.status}}
                                         </span>
@@ -84,26 +83,52 @@
                                     </td>
                                 </tr>
 
-                                <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+                                <tr class="!hover:bg-transparent">
+                                    <td colspan="4">
+                                        <pagination-controls (pageChange)="p = $event" class="pagination"></pagination-controls>
+                                    </td>
+                                </tr>
                             </tbody>
 
                             <tbody *ngIf="!records" class="bg-white divide-y">
-                                <tr *ngFor="let item of skeletonPreloader" 
-                                    class="text-gray-700">
-                                    <td class="px-4 py-3">
-                                        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                                <tr *ngFor="let item of skeletonPreloader" class="text-gray-700">
+                                    <td class="">
+                                        <div role="status" class="max-w-sm my-5 mx-4 animate-pulse">
+                                            <div class="h-3 bg-gray-200 rounded-full">
+                                            </div>
+                                            
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
                                     </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                                    <td class=" text-sm">
+                                        <div role="status" class="max-w-sm my-5 mx-4 animate-pulse">
+                                            <div class="h-3 bg-gray-200 rounded-full">
+                                            </div>
+                                            
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
                                     </td>
-                                    <td class="px-4 py-3 text-xs">
-                                        <span
-                                            class="px-2 py-1 font-semibold leading-tight rounded-full">
-                                            <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                                    <td class=" text-xs">
+                                        <span class=" font-semibold leading-tight rounded-full">
+                                            <div role="status" class="max-w-sm my-5 mx-4 animate-pulse">
+                                                <div class="h-3 bg-gray-200 rounded-full">
+                                                </div>
+                                                
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+
                                         </span>
                                     </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+                                    <td class=" text-sm">
+                                        <div role="status" class="max-w-sm my-5 mx-4 animate-pulse">
+                                            <div class="h-3 bg-gray-200 rounded-full">
+                                            </div>
+                                            
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
                                     </td>
                                 </tr>
                             </tbody>

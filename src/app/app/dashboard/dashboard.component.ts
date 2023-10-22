@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CookieServices } from 'src/app/services/cookie.service';
 import { RecordsService } from 'src/app/services/records/records.service';
@@ -10,7 +10,7 @@ import { HttpStatusCode } from '@angular/common/http';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   skeletonPreloader = [1, 2, 3, 4];
   allRecords?: Record[];
   records?: Record[];
