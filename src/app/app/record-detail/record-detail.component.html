@@ -35,13 +35,59 @@
                     </div>
                     <p>{{record.description}}</p>
                 </div>
+                <div class="mt-3">
+                    <p class="font-normal text-gray-700 text-lg">Case files</p>
+                    <div>
+                        <div *ngIf="!caseFiles" class="flex space-x-1 text-gray-500 items-center">
+                            <ion-icon name="document-text-outline"></ion-icon>
+                            <p class="">No uploaded documents</p>
+                        </div>
+                        <div *ngIf="caseFiles">
+                            <div *ngFor="let file of caseFiles" class="flex space-x-1 text-purple-600 items-center">
+                                <ion-icon name="document-text-outline"></ion-icon>
+                                <a href="{{baseUrl}}/{{file.filepath}}" 
+                                    download="{{file.filename}}"
+                                    class="text-purple-600">{{file.filename}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mt-3 flex flex-wrap gap-1">
                     <div class="flex gap-1 flex-wrap">
-                        <button (click)="showDocumentation()"
-                            class="bg-purple-600 rounded text-sm text-white py-2 px-4 flex items-center space-x-1">
-                            <ion-icon name="document-text-outline" class="font-normal"></ion-icon>
-                            <span class="font-normal">Documentation</span>
-                        </button>
+                        <div class="relative" *ngIf="userId != record.court_id">
+                            <button (click)="showDocumentation();"
+                                class="bg-purple-600 rounded text-sm text-white py-2 px-4 flex items-center space-x-1">
+                                <ion-icon name="document-text-outline" class="font-normal"></ion-icon>
+                                <span class="font-normal">View documentation</span>
+                            </button>
+                        </div>
+
+                        <div class="relative" *ngIf="userId == record.court_id">
+                            <button (click)="documentationDropdown = !documentationDropdown"
+                                class="bg-purple-600 rounded text-sm text-white py-2 px-4 flex items-center space-x-1">
+                                <ion-icon name="document-text-outline" class="font-normal"></ion-icon>
+                                <span class="font-normal">Documentation</span>
+                            </button>
+                            <div *ngIf="documentationDropdown"
+                                class="absolute left-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                <div class="py-1" role="none">
+                                    <a (click)="showDocumentation(); documentationDropdown = !documentationDropdown"
+                                        class="text-gray-700 hover:bg-purple-100 px-4 cursor-pointer py-2 text-sm flex items-center space-x-1"
+                                        role="menuitem" tabindex="-1" id="menu-item-0">
+                                        <ion-icon name="create-outline"></ion-icon>
+                                        <span>Create/edit</span>
+                                    </a>
+                                    <a (click)="uploadDialog = !uploadDialog; documentationDropdown = !documentationDropdown"
+                                        class="text-gray-700 hover:bg-purple-100 px-4 cursor-pointer py-2 text-sm flex items-center space-x-1"
+                                        role="menuitem" tabindex="-1" id="menu-item-1">
+                                        <ion-icon name="cloud-upload-outline"></ion-icon>
+                                        <span>Upload file</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
                         <div *ngIf="userId == record.court_id">
                             <button *ngIf="record.visibility == 'public'" (click)="changeVisibility('private')"
@@ -87,6 +133,7 @@
                         </button>
                     </div>
                 </div>
+                
             </div>
             <div *ngIf="documentation"
                 class="fixed top-0 w-screen h-screen left-0 z-[100] bg-white bg-opacity-40 backdrop-blur-lg flex flex-col items-center justify-center">
@@ -116,8 +163,7 @@
             <div>
 
                 <!-- Main modal -->
-                <div id="defaultModal" tabindex="-1" aria-hidden="true"
-                    *ngIf="deletePopup"
+                <div id="defaultModal" tabindex="-1" aria-hidden="true" *ngIf="deletePopup"
                     class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-screen max-h-full bg-gray-800 bg-opacity-50 flex items-center justify-center">
                     <div class="relative w-full max-w-xl max-h-full">
                         <!-- Modal content -->
@@ -135,12 +181,11 @@
                                 </p>
                             </div>
                             <!-- Modal footer -->
-                            <div class="flex items-center justify-between p-6 space-x-2 border-t border-gray-200 rounded-b">
-                                <button data-modal-hide="defaultModal" type="button"
-                                    (click)="deletePopup = false"
+                            <div
+                                class="flex items-center justify-between p-6 space-x-2 border-t border-gray-200 rounded-b">
+                                <button data-modal-hide="defaultModal" type="button" (click)="deletePopup = false"
                                     class="text-gray-500 bg-gray-100 hover:bg-gray-200 focus:outline-none rounded-lg border border-gray-600 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Cancel</button>
-                                <button data-modal-hide="defaultModal" type="button"
-                                    (click)="deleteRecord()"
+                                <button data-modal-hide="defaultModal" type="button" (click)="deleteRecord()"
                                     class="text-white bg-red-700 hover:bg-red-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                     <span *ngIf="!isDeleting">
                                         <span class="font-normal">Delete</span>
@@ -157,6 +202,57 @@
                     </div>
                 </div>
 
+            </div>
+
+            <div *ngIf="uploadDialog"
+                class="fixed left-0 top-0 z-[4000] w-screen h-screen flex items-center justify-center"
+                aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                <div (click)="uploadDialog = !uploadDialog"
+                    class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                <div class="inset-0 z-10 overflow-y-auto w-full max-w-sm">
+                    <div class="flex items-center w-full justify-center text-center sm:items-center sm:p-0">
+                        <div
+                            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-full max-w-lg">
+                            <form id="uploadForm" enctype="multipart/form-data" [formGroup]="uploadForm"
+                                (ngSubmit)="onSubmit()">
+                                <div class="flex flex-col gap-3 items-center justify-center w-full p-3">
+                                    <label for="dropzone-file"
+                                        class="flex flex-col items-center justify-center w-full max-w-lg h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                            </svg>
+                                            <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to
+                                                    upload</span> a file</p>
+                                            <p class="text-xs text-gray-500">DOC, DOCX, PDF up to 10MB</p>
+                                        </div>
+
+                                        <div class="filename-con flex space-x-1 text-gray-500 items-center">
+                                            <ion-icon name="document-text-outline"></ion-icon>
+                                            <p id="filename" class="text-sm">{{filename || "No file selected"}}</p>
+                                        </div>
+                                        <input id="dropzone-file" type="file" name="file" class="hidden"
+                                            (change)="onFileSelect(file)" accept=".doc, .docx, .pdf" #file />
+                                    </label>
+                                    <button type="submit"
+                                        class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-md">
+                                        <span *ngIf="!isUploading">Upload</span>
+                                        <div *ngIf="isUploading"
+                                            class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                                            role="status">
+                                            <span
+                                                class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>

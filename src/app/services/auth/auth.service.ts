@@ -18,28 +18,28 @@ export class AuthService {
   ) { }
 
   public userRegistration(data:SignupModel) {
-    return this.httpClient.post<any>(this.baseUrl + '/register', data)
+    return this.httpClient.post<any>(this.baseUrl + '/api/register', data)
       .pipe(map(Users => {
         return Users;
       }));
   }
 
   public userLogin(data:LoginModel) {
-    return this.httpClient.post<any>(this.baseUrl + '/login', data)
+    return this.httpClient.post<any>(this.baseUrl + '/api/login', data)
       .pipe(map(res => {
         return res;
       }));
   }
 
   public getUser() {
-    return this.httpClient.get<any>(this.baseUrl + '/user', { withCredentials: true })
+    return this.httpClient.get<any>(this.baseUrl + '/api/user', { withCredentials: true })
       .pipe(map(res => {
         return res;
       }));
   }
 
   public logout() {
-    return this.httpClient.post<any>(this.baseUrl + '/logout', { withCredentials: true })
+    return this.httpClient.post<any>(this.baseUrl + '/api/logout', { withCredentials: true })
       .pipe(map(res => {
         return res;
       }));

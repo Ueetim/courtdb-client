@@ -51,12 +51,13 @@ export class LoginComponent {
 
     this.authService.userLogin(loginData).subscribe({
 			next: (v) => {
+        console.log(v);
         let token = v.token.value;
         this.cookieService.storeCookie("auth", token, "/");
         localStorage.setItem("auth", token);
         AuthInterceptor.token = token;
         this.router.navigate(['/app']);
-
+        
 			},
 			error: (e) => {
 				let message = e.error.message;

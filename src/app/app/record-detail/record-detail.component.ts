@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { RecordsService } from 'src/app/services/records/records.service';
 import { Record, documentation, visibility } from 'src/app/models/records.model';
 import { HotToastService } from '@ngneat/hot-toast';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FileService } from 'src/app/services/files/file.service';
 
 @Component({
   selector: 'app-record-detail',
@@ -17,14 +18,24 @@ export class RecordDetailComponent {
   deletePopup:boolean = false;
   isDeleting: boolean = false;
   documentation: boolean = false;
+  documentationDropdown:boolean = false;
+  uploadDialog:boolean = false;
   editorContent!: string;
   disabled: boolean = false;
+  isUploading:boolean = false;
+  filename:string = "";
+  caseFiles!:any;
+  baseUrl = this.fileService.baseUrl;
   @Input() control!: FormControl
+
+  uploadForm!: FormGroup;
 
   constructor(
     private router: Router,
     private recordsService: RecordsService,
-    private toast: HotToastService
+    private fileService: FileService,
+    private toast: HotToastService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -35,6 +46,11 @@ export class RecordDetailComponent {
 
     this.getRecord();
 
+    this.uploadForm = this.formBuilder.group({
+      file: '',
+    });
+
+    this.getCaseFiles();
   }
 
   getRecord() {
@@ -145,6 +161,61 @@ export class RecordDetailComponent {
         this.isDeleting = false;
 
         this.toast.error("Failed to delete record")
+      },
+    });
+  }
+
+  onFileSelect(item:any) {
+    if (item.files.length > 0) {
+      const file = item.files[0];
+      this.uploadForm.get('file')!.setValue(file);
+      this.filename = file.name;
+    }
+  }
+
+  getCaseFiles() {
+    this.fileService.getCaseFiles(this.record.ID).subscribe({
+      next: (v) => {
+        if (v.length > 0) {
+          this.caseFiles = v;
+        }
+      },
+      error: (e) => {
+        let message = e.error.message;
+        this.isUploading = false;
+
+        if (message) {
+          this.toast.error(message);
+        } else {
+          this.toast.error("Couldn't fetch case files. Please try again")
+        }
+      },
+    });
+  }
+
+  onSubmit() {
+    this.isUploading = true;
+    const formData = new FormData();
+    formData.append('file', this.uploadForm.get('file')!.value);
+    formData.append('case_id', this.record.ID.toString());
+
+    this.fileService.uploadFile(formData).subscribe({
+      next: (v) => {
+        // console.log(v);
+        this.isUploading = false;
+        this.uploadDialog = false;
+        this.toast.success("File uploaded successfully");
+        this.getCaseFiles();
+      },
+      error: (e) => {
+        let message = e.error.message;
+        this.isUploading = false;
+
+        if (message) {
+          this.toast.error(message);
+        } else {
+          this.toast.error("An unknown error occurred. Please try again")
+        }
       },
     });
   }
